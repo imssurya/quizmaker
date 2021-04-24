@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quizmaker/views/signin.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }

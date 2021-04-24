@@ -21,12 +21,15 @@ class _SignInState extends State<SignIn> {
       setState(() {
         isLoading = true;
       });
-      await authService.signInEmailAndPass(email, password);
-      setState(() {
-        isLoading = false;
+      await authService.signInEmailAndPass(email, password).then((value) {
+        if (value != null) {
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+        }
       });
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
     }
   }
 
@@ -63,19 +66,20 @@ class _SignInState extends State<SignIn> {
                       height: 6,
                     ),
                     TextFormField(
+                      obscureText: true,
                       decoration: InputDecoration(hintText: 'Password'),
                       validator: (val) {
                         return val.isEmpty ? "Enter Password" : null;
                       },
                       onChanged: (val) {
-                        email = val;
+                        password = val;
                       },
                     ),
                     SizedBox(
                       height: 24,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: signIn,
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         decoration: BoxDecoration(
