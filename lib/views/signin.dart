@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/home.dart';
 import 'package:quizmaker/views/signup.dart';
@@ -10,17 +11,17 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  @override
   final _formKey = GlobalKey<FormState>();
   String email, password;
   bool isLoading = false;
   AuthService authService = AuthService();
-
+  @override
   signIn() async {
     if (_formKey.currentState.validate()) {
       setState(() {
         isLoading = true;
       });
+      HelperFunctions.saveUserLoggedInDetails(isLoggedIn: true);
       await authService.signInEmailAndPass(email, password).then((value) {
         if (value != null) {
           setState(() {
@@ -79,21 +80,8 @@ class _SignInState extends State<SignIn> {
                       height: 24,
                     ),
                     GestureDetector(
-                      onTap: signIn,
-                      child: Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(30)),
-                        alignment: Alignment.center,
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 48,
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ),
-                    ),
+                        onTap: signIn,
+                        child: blueButton(context: context, label: 'Sign In')),
                     SizedBox(
                       height: 24,
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/home.dart';
 import 'package:quizmaker/views/signin.dart';
@@ -19,6 +20,7 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         isLoading = true;
       });
+      HelperFunctions.saveUserLoggedInDetails(isLoggedIn: true);
       authService.signUpWithEmailAndPassword(email, password).then((value) {
         if (value != null) {
           Navigator.of(context)
@@ -87,21 +89,8 @@ class _SignUpState extends State<SignUp> {
                       height: 24,
                     ),
                     GestureDetector(
-                      onTap: signUp,
-                      child: Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(30)),
-                        alignment: Alignment.center,
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 48,
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ),
-                    ),
+                        onTap: signUp,
+                        child: blueButton(context: context, label: 'Sign Up')),
                     SizedBox(
                       height: 24,
                     ),
